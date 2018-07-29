@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Identify the type of build tool that we have and run it
+
+
+if [ -f "build.xml" ]; then
+    cmd="mvn clean install"
+elif [ -f "build.sbt" ]; then
+    cmd="sbt test"
+elif [ -f "build.gradle" ]; then
+    cmd="gradle clean install"
+else
+    echo "Could not determine the type of build to run, are you in the right folder?"
+    exit -1
+fi
+
+${cmd}

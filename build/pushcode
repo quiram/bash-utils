@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Safely pushes code into the repository. The way to do is safely is:
+# 1. pull changes
+# 2. run full build locally
+# 3. push
+
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+run_full_build="${BUILD_SCRIPTS_DIR}/run-full-build"
+
+commit_output=`git status | grep "nothing to commit"`
+
+if [ "$commit_output" == "" ]; then
+	echo "You have local changes, pushing is not safe."
+	exit 1
+fi
+
+git pull -r && ${run_full_build} && git push
+
