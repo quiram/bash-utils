@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Kill all process whose name match a particular string
+
+ps axu | grep $1 | cut -f2- -d\  | sed -e s/" *\([0-9]*\).*"/"\1"/ | xargs kill
