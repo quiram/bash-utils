@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# SSH into a running Docker container specified by name
+
+docker_name=$1
+
+docker_id=`docker ps | grep ${docker_name} | cut -f1 -d\ ` 
+
+docker exec -ti ${docker_id} bash
+

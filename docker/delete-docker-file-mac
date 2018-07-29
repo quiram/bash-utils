@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Delete the working file for Docker in Mac.
+# This will delete everything Docker-related that you have locally, including images, containers and volumes.
+# You will have to restart Docker Daemon after this for changes to take effect.
+#
+# WARNING: this is a rather nuclear option, use it only when Docker is misbehaving and you don't know why
+
+rm ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/Docker.qcow2
+

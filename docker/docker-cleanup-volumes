@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Remove all Docker volumes that are no longer in use
+
+docker volume rm $(docker volume ls -qf dangling=true)
