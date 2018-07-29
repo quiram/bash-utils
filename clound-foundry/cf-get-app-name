@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Get the full name of an application in Cloud Foundry from a part of the name
+
+if [ $# -ne 1 ]; then
+	echo "Error, usage $0 <app_name_pattern>"
+	exit -1
+fi
+
+app_data=`cf apps | grep $1 | grep started`
+app_name=`echo ${app_data} | cut -f1 -d\  `
+echo ${app_name}
+

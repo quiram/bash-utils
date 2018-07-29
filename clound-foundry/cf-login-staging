@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Login into the Staging space of Cloud Foundry (assuming there is one)
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd ${BUILD_SCRIPTS_DIR}
+source ./common
+popd
+
+cf login -a ${CF_HOST} -s staging -u ${CF_USER} -p `cf-password`

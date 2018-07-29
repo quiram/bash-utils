@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Download the logs of a specific application currently running in Cloud Foundry
+# This script assumes that you are currently logged into Cloud Foundry, if not, check cf-login-*
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd ${BUILD_SCRIPTS_DIR}
+source ../file-manipulation/file-checks
+popd
+
+short_name=$1
+
+if [ -z "${short_name}" ]; then
+    echo "You need to specify the application that you want logs for:"
+    echo "$0 <app_name>"
+    exit -1
+fi
+
+app_name=`cf-get-app-name ${short_name}`
+app_data=`cf apps | grep ${short_name} | grep started`
+instances=`echo ${app_data} | cut -d\/ -f2 | cut -d\  -f1`
+dir_name=`echo ${app_name} | sed s/_/-/ | sed s/-staging// | sed s/-dev//`
+
+choose_date
+date=`${date_cmd} "+%Y-%m-%d"`
+log_file_name="application${date}.log"
+tmp_file_name=".tmp${date}.log"
+
+echo "" > ${tmp_file_name}
+
+for x in `seq 0 $((instances-1))`; do
+	cf ssh ${app_name} -i $x -c "cat app/${dir_name}/logs/${log_file_name}" >>${tmp_file_name}
+done
+
+cat ${tmp_file_name} | sort >${log_file_name}
+rm -f ${tmp_file_name}

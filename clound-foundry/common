@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Common values for your Cloud Foundry installation, change as needed
+
+CF_HOST="your_host"
+CF_USER="your_user"
