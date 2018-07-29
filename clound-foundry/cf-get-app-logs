@@ -22,7 +22,7 @@ app_data=`cf apps | grep ${short_name} | grep started`
 instances=`echo ${app_data} | cut -d\/ -f2 | cut -d\  -f1`
 dir_name=`echo ${app_name} | sed s/_/-/ | sed s/-staging// | sed s/-dev//`
 
-choose_date
+choose_date_cmd
 date=`${date_cmd} "+%Y-%m-%d"`
 log_file_name="application${date}.log"
 tmp_file_name=".tmp${date}.log"

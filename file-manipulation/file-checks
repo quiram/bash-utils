@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Common file-check related tasks that you may need to do while writing bash scripts.
+# This file is meant to be "included" into your script using 'source'
+
+
+no_file_error_message() {
+    content_name=$1
+    file_name=$2
+    explanation=$3
+
+    echo "${content_name} file not found"
+
+    [ -z "${explanation}" ] || echo "You can generate this file by running: ${explanation}"
+
+    file_error="true"
+}
+
+
+ensure_file() {
+    content_name=$1
+    file_name=$2
+
+    [ -f ${file_name} ] || no_file_error_message "${content_name}" ${file_name}
+}
+
+
+ensure_command() {
+    command=$1
+    package=$2
+
+    location=$(which ${command})
+    glocation=$(which "g${command}")
+    if [ -z "${location}" -a -z "${glocation}" ]; then
+        echo "Command '${command}' not available, please install before proceeding (search for '${package}')."
+        exit 1
+    fi
+}
+
+
+choose_date_cmd() {
+    command=date
+    location=$(which ${command})
+    glocation=$(which "g${command}")
+
+    [ -z "${location}" ] || date_cmd="${location}" && date_cmd="${glocation}"
+}
