@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Get the name of the current branch in this GIT repo
+
+branch_name=`git status | grep "On branch" | cut -d\  -f 3`
+
+if [ "$branch_name" == "" ]; then
+        echo "This isn't a GIT repository"
+        exit 1
+fi
+
+echo ${branch_name}
+
