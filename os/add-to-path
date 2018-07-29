@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # Add the folder where THIS file exists to the path
+# The best way to use this script is copying it to wherever you're packing a set of useful scripts of your own
+# and then calling it to make your own scripts available.
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
