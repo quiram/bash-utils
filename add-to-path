@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Add the folder where THIS file exists to the path
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+export PATH=${BUILD_SCRIPTS_DIR}:${PATH}
