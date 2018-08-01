@@ -3,7 +3,7 @@
 # Identify the type of build tool that we have and run it
 
 
-if [ -f "build.xml" ]; then
+if [ -f "pom.xml" ]; then
     cmd="mvn clean install"
 elif [ -f "build.sbt" ]; then
     cmd="sbt test"
