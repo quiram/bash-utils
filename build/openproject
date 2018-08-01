@@ -2,5 +2,5 @@
 
 # Update the current branch from remote and open IDEA
 
-git pull -r && idea .
+git pull -r && idea . &
 
