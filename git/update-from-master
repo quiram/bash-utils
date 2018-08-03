@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Updates the current branch with the latest master value (in remote)
+
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 branch_name=$(${BUILD_SCRIPTS_DIR}/branch-name)
