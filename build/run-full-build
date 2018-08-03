@@ -6,7 +6,7 @@
 if [ -f "pom.xml" ]; then
     cmd="mvn clean install"
 elif [ -f "build.sbt" ]; then
-    cmd="sbt test"
+    cmd="sbt test it:test func:test"
 elif [ -f "build.gradle" ]; then
     cmd="gradle clean install"
 else
