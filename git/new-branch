@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Create a new branch off the current one.
+# A prefix can optionally be configured;
+# this is useful if you tend to name your branches using a JIRA ticket or similar
+
+
+PREFIX=""
+
+usage_and_exit() {
+    echo "Usage: $0 <new-branch-name>"
+    exit 1
+}
+
+[ $# -eq 1 ] || usage_and_exit
+
+new_branch_name=$1
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+current_branch_name=$(${BUILD_SCRIPTS_DIR}/branch-name)
+
+[ "${current_branch_name}" = "master" ] || echo "WARNING: creating new branch from another branch (${current_branch_name})."
+
+git checkout -b "${PREFIX}${new_branch_name}"
