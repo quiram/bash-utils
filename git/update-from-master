@@ -1,0 +1,12 @@
+#!/bin/bash
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+branch_name=$(${BUILD_SCRIPTS_DIR}/branch-name)
+
+if [ "${branch_name}" = "master" ]; then
+    git pull -r
+else
+    git checkout master && git pull -r && git checkout ${branch_name} && git rebase master
+fi
+
