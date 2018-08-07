@@ -16,5 +16,15 @@ if [ "$commit_output" == "" ]; then
 	exit 1
 fi
 
-git pull -r && ${run_full_build} && git push
+
+remote=$(git status | grep "\.\.\." | cut -d\. -f 4)
+
+if [ -z "${remote}" ]; then
+    # No remote to rebase from
+    full_cmd="${run_full_build} && git push"
+else
+    full_cmd="git pull -r && ${run_full_build} && git push"
+fi
+
+eval ${full_cmd}
 
