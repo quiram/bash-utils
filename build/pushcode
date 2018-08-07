@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Safely pushes code into the repository. The way to do is safely is:
-# 1. pull changes
+# 1. pull changes (if possible)
 # 2. run full build locally
 # 3. push
 
@@ -9,22 +9,30 @@
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 run_full_build="${BUILD_SCRIPTS_DIR}/run-full-build"
 
-commit_output=`git status | grep "nothing to commit"`
+check_for_local_changes() {
+    commit_output=`git status | grep "nothing to commit"`
 
-if [ "$commit_output" == "" ]; then
-	echo "You have local changes, pushing is not safe."
-	exit 1
-fi
+    if [ "$commit_output" == "" ]; then
+        echo "You have local changes, pushing is not safe."
+        exit 1
+    fi
+}
 
+# make sure everything has been committed
+check_for_local_changes
 
+# rebase only if there is a remote to rebase from
 remote=$(git status | grep "\.\.\." | cut -d\. -f 4)
 
-if [ -z "${remote}" ]; then
-    # No remote to rebase from
-    full_cmd="${run_full_build} && git push"
-else
-    full_cmd="git pull -r && ${run_full_build} && git push"
+if [ -n "${remote}" ]; then
+    git pull -r || exit 1
 fi
 
-eval ${full_cmd}
+# run the build
+${run_full_build} || exit 1
+
+# check again, in case the build reformatted files
+check_for_local_changes
+
+git push
 
