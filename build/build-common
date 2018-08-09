@@ -11,11 +11,12 @@ rebase_if_remote() {
     fi
 }
 
-ensure_remote() {
+push_changes() {
     remote=$(remote-branch-name)
-    local=$(branch-name)
 
     if [ -z "${remote}" ]; then
-        git branch --set-upstream origin ${local}
+        git push --set-upstream origin $(branch-name) || exit 1
+    else
+        git push || exit 1
     fi
 }
