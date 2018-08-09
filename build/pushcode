@@ -33,5 +33,8 @@ ${run_full_build} || exit 1
 # check again, in case the build has reformatted files
 check_for_local_changes
 
+# make sure we can push somewhere
+ensure_remote
+
 git push
 

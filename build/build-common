@@ -2,10 +2,20 @@
 
 # Common utilities to all the build-related scripts
 
+
 rebase_if_remote() {
-    remote=$(git status | grep "\.\.\." | cut -d\. -f 4)
+    remote=$(remote-branch-name)
 
     if [ -n "${remote}" ]; then
         git pull -r || exit 1
+    fi
+}
+
+ensure_remote() {
+    remote=$(remote-branch-name)
+    local=$(branch-name)
+
+    if [ -z "${remote}" ]; then
+        git branch --set-upstream origin ${local}
     fi
 }
