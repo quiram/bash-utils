@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Common utilities to all the build-related scripts
+
+rebase_if_remote() {
+    remote=$(git status | grep "\.\.\." | cut -d\. -f 4)
+
+    if [ -n "${remote}" ]; then
+        git pull -r || exit 1
+    fi
+}

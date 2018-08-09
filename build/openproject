@@ -2,5 +2,10 @@
 
 # Update the current branch from remote and open IDEA
 
-git pull -r && idea . &
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/build-common"
+
+rebase_if_remote
+
+idea . &
 

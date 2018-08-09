@@ -7,6 +7,8 @@
 
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/build-common"
+
 run_full_build="${BUILD_SCRIPTS_DIR}/run-full-build"
 
 check_for_local_changes() {
@@ -18,20 +20,17 @@ check_for_local_changes() {
     fi
 }
 
+
 # make sure everything has been committed
 check_for_local_changes
 
 # rebase only if there is a remote to rebase from
-remote=$(git status | grep "\.\.\." | cut -d\. -f 4)
-
-if [ -n "${remote}" ]; then
-    git pull -r || exit 1
-fi
+rebase_if_remote
 
 # run the build
 ${run_full_build} || exit 1
 
-# check again, in case the build reformatted files
+# check again, in case the build has reformatted files
 check_for_local_changes
 
 git push
