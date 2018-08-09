@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Add the folder where THIS file exists, and all of its subfolders, to the path
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+for folder in $(find ${BUILD_SCRIPTS_DIR} -type d -not -path '*/\.*'); do
+    export PATH=${folder}:${PATH}
+done
+
