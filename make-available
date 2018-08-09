@@ -4,3 +4,4 @@ BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "# Add bash-utils to path" >>$HOME/.bashrc
 echo "source ${BUILD_SCRIPTS_DIR}/add-to-path" >>$HOME/.bashrc
+echo "" >>$HOME/.bashrc

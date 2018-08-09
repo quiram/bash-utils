@@ -2,13 +2,12 @@
 
 # Create a new branch off the current one.
 #
-# A prefix can optionally be configured;
+# A prefix can optionally be configured in environment variable NEW_BRANCH_PREFIX;
 # this is useful if you tend to name your branches using a JIRA ticket or similar.
 #
 # You can also default the branch name into an environment variable, useful if you work across several repositories
 # and you want your branches to have the same name across all of them.
 
-PREFIX=""
 
 usage_and_exit() {
     echo "Usage: $0 <new-branch-name>"
@@ -30,4 +29,4 @@ current_branch_name=$(${BUILD_SCRIPTS_DIR}/branch-name)
 
 [ "${current_branch_name}" = "master" ] || echo "WARNING: creating new branch from another branch (${current_branch_name})."
 
-git checkout -b "${PREFIX}${new_branch_name}"
+git checkout -b "${NEW_BRANCH_PREFIX}${new_branch_name}"
