@@ -23,9 +23,7 @@ else
     usage_and_exit
 fi
 
-BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-current_branch_name=$(${BUILD_SCRIPTS_DIR}/branch-name)
+current_branch_name=$(branch-name)
 
 [ "${current_branch_name}" = "master" ] || echo "WARNING: creating new branch from another branch (${current_branch_name})."
 

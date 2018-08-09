@@ -2,9 +2,7 @@
 
 # Updates the current branch with the latest master value (in remote)
 
-BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-branch_name=$(${BUILD_SCRIPTS_DIR}/branch-name)
+branch_name=$(branch-name)
 
 if [ "${branch_name}" = "master" ]; then
     git pull -r

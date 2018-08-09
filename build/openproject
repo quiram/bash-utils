@@ -3,7 +3,10 @@
 # Update the current branch from remote and open IDEA
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source "${BUILD_SCRIPTS_DIR}/build-common"
+
+pushd "${BUILD_SCRIPTS_DIR}"
+source ./build-common
+popd
 
 rebase_if_remote
 
