@@ -5,7 +5,7 @@
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${BUILD_SCRIPTS_DIR}
-source ./common
+source ./cf-common
 popd
 
 cf login -a ${CF_HOST} -s dev -u ${CF_USER} -p `cf-password`
