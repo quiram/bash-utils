@@ -2,6 +2,10 @@
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo "# Add bash-utils to path" >>$HOME/.bashrc
-echo "source ${BUILD_SCRIPTS_DIR}/add-to-path" >>$HOME/.bashrc
-echo "" >>$HOME/.bashrc
+[ -f "$HOME/.bashrc" ] && bashrc="$HOME/.bashrc"
+[ -f "$HOME/.bash_profile" ] && bashrc="$HOME/.bash_profile"
+
+echo "# Add bash-utils to path" >>${bashrc}
+echo "source ${BUILD_SCRIPTS_DIR}/add-to-path" >>${bashrc}
+echo "" >>${bashrc}
+

@@ -5,4 +5,4 @@ at the beginning explaining objective and usage.
 Many of the commands support defaults in the form of environment variables, check them out!
 
 The best way to make use of this repository is to place wherever you want to keep it and then run `make-available`. You
-will need to reload your bash defaults (`source $HOME/.bashrc`) for changes to be effective on your current shell.
+will need to reload your bash defaults (typically `source $HOME/.bashrc` or `source $HOME/.bash_profile`, depending on your system) for changes to be effective on your current shell.
