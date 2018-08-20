@@ -9,3 +9,4 @@ echo "# Add bash-utils to path" >>${bashrc}
 echo "source ${BUILD_SCRIPTS_DIR}/add-to-path" >>${bashrc}
 echo "" >>${bashrc}
 
+source ${bashrc}
