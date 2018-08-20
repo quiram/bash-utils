@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Edit the recent commit history of this GIT repository
+# If no number of commits to edit is specified, it will be defaulted to 5
+
+commits=${1-5}
+
+git rebase -i HEAD~${commits}
+
