@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Stop tracking one or more files that are currently being tracked
+
+git rm --cached $*
