@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+usage_and_exit() {
+    echo "Usage: $0 <alias> <cert-file>"
+    echo "    <alias> an alias for this certificate (must be unique within the store)"
+    echo "    <cert-file> file containing the certificate to store"
+    exit 1
+}
+
+alias=$1
+file=$2
+
+[ -z "${file}" -o -z "${alias}" ] && usage_and_exit
+[ -z "${JAVA_HOME}" ] && echo "JAVA_HOME isn't set, cannot locate keystore" && exit 1
+
+sudo keytool -importcert -file ${file} -alias ${alias} -keystore "${JAVA_HOME}/jre/lib/security/cacerts"
