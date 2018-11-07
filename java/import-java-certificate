@@ -10,7 +10,7 @@ usage_and_exit() {
 alias=$1
 file=$2
 
-[ -z "${file}" -o -z "${alias}" ] && usage_and_exit
-[ -z "${JAVA_HOME}" ] && echo "JAVA_HOME isn't set, cannot locate keystore" && exit 1
+[[ -z "${file}" || -z "${alias}" ]] && usage_and_exit
+[[ -z "${JAVA_HOME}" ]] && echo "JAVA_HOME isn't set, cannot locate keystore" && exit 1
 
-sudo keytool -importcert -file "${file}" -alias ${alias} -cacerts
+sudo keytool -importcert -file "${file}" -alias ${alias} -keystore "${JAVA_HOME}/jre/lib/security/cacerts"
