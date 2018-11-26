@@ -12,5 +12,12 @@ file=$2
 
 [[ -z "${file}" || -z "${alias}" ]] && usage_and_exit
 [[ -z "${JAVA_HOME}" ]] && echo "JAVA_HOME isn't set, cannot locate keystore" && exit 1
+version=$(java -version 2>&1 | grep version | cut -f2 -d\" | cut -f1 -d\.)
 
-sudo keytool -importcert -file "${file}" -alias ${alias} -keystore "${JAVA_HOME}/jre/lib/security/cacerts"
+if [[ ${version} -gt 1 ]]; then
+    cacerts_locator="-cacerts"
+else
+    cacerts_locator="-keystore ${JAVA_HOME}/jre/lib/security/cacerts"
+fi
+
+sudo keytool -importcert -file "${file}" -alias ${alias} ${cacerts_locator}
