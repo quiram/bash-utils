@@ -7,16 +7,15 @@
 
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-pushd "${BUILD_SCRIPTS_DIR}"
-source ./build-common
-popd
+source "${BUILD_SCRIPTS_DIR}/build-common"
 
 run_full_build="${BUILD_SCRIPTS_DIR}/run-full-build"
+update_from_master="${BUILD_SCRIPTS_DIR}/../git/update-from-master"
 
 check_for_local_changes() {
     commit_output=`git status | grep "nothing to commit"`
 
-    if [ "$commit_output" == "" ]; then
+    if [[ "$commit_output" == "" ]]; then
         echo "You have local changes, pushing is not safe."
         exit 1
     fi
@@ -28,6 +27,9 @@ check_for_local_changes
 
 # rebase only if there is a remote to rebase from
 rebase_if_remote
+
+# rebase from master (only effective if we're on a branch)
+${update_from_master}
 
 # run the build
 ${run_full_build} || exit 1
