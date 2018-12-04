@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+usage_and_exit() {
+    echo "random: produce a random number"
+    echo "Usage:"
+    echo "random max: produce a random number between 1 and max (included)"
+    echo "random min max: produce a random number between min and max (both included)"
+
+    exit 1
+}
+
+[[ $# -eq 0 || $# -gt 2  ]] && usage_and_exit
+
+if [[ $# -eq 1 ]]; then
+    min=1
+    diff=$1
+else
+    min=$1
+    diff=$(($2 - $1))
+fi
+
+echo $(($min + RANDOM % $diff))
