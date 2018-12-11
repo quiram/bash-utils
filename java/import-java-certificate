@@ -14,7 +14,7 @@ file=$2
 [[ -z "${JAVA_HOME}" ]] && echo "JAVA_HOME isn't set, cannot locate keystore" && exit 1
 version=$(java -version 2>&1 | grep version | cut -f2 -d\" | cut -f1 -d\.)
 
-if [[ ${version} -gt 1 ]]; then
+if [[ ${version} -gt 10 ]]; then
     cacerts_locator="-cacerts"
 else
     cacerts_locator="-keystore ${JAVA_HOME}/jre/lib/security/cacerts"
