@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Bulk-rewrite the message of any number of commits via a search-and-replace pattern
+
+usage_and_exit() {
+    echo "Usage: $0 <old-string> <new-string> <start-commit>"
+    echo "    Scan all commits from <start-commit> (not included!) and replace <old-string> for <new-string> "
+    echo "    in the commit message"
+    exit 1
+}
+
+if [[ ! $# -eq 3 ]]; then
+    usage_and_exit
+fi
+
+old_string=$1
+new_string=$2
+from_commit=$3
+
+sed_command="sed s/\"${old_string}\"/\"${new_string}\"/g"
+
+git filter-branch -f --msg-filter "${sed_command}" ${from_commit}..
