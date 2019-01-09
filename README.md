@@ -1,4 +1,15 @@
 # bash-utils
+
+## TL;DR
+```bash
+git clone https://github.com/quiram/bash-utils.git
+cd bash-utils
+./make-available
+source $HOME/.bashrc
+```
+Enjoy bash-utils :)
+
+## Details
 Useful bits of Bash code, separated by categories. Each folder will have a number of scripts, each of them with comments
 at the beginning explaining objective and usage.
 
