@@ -2,6 +2,9 @@
 
 # Identify the type of build tool that we have and run it
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
+
 if [[ -f "build.sh" ]]; then
     type="custom script"
     cmd="./build.sh"
@@ -15,11 +18,10 @@ elif [[ -f "build.gradle" ]]; then
     type="gradle"
     cmd="gradle clean install"
 else
-    echo "Could not determine the type of build to run, are you in the right folder?"
-    exit -1
+    fail "Could not determine the type of build to run, are you in the right folder?"
 fi
 
-echo "Running ${type} build..."
+log "Running ${type} build..."
 ${cmd}
 result=$?
 

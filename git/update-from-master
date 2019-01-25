@@ -2,11 +2,14 @@
 
 # Updates the current branch with the latest master value (in remote)
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
+
 branch_name=$(branch-name)
 
-echo "Rebasing from master..."
+log "Rebasing from master..."
 
-if [ "${branch_name}" = "master" ]; then
+if [[ "${branch_name}" = "master" ]]; then
     git pull -r
 else
     git checkout master && git pull -r && git checkout ${branch_name} && git rebase master

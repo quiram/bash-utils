@@ -2,12 +2,14 @@
 
 # Common utilities to all the build-related scripts
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
 
 rebase_if_remote() {
     remote=$(remote-branch-name)
 
-    if [ -n "${remote}" ]; then
-        echo "Rebasing from remote..."
+    if [[ -n "${remote}" ]]; then
+        log "Rebasing from remote..."
         git pull -r || exit 1
     fi
 }
@@ -15,8 +17,8 @@ rebase_if_remote() {
 push_changes() {
     remote=$(remote-branch-name)
 
-    echo "Pushing changes..."
-    if [ -z "${remote}" ]; then
+    log "Pushing changes..."
+    if [[ -z "${remote}" ]]; then
         git push --set-upstream origin $(branch-name) || exit 1
     else
         git push || exit 1

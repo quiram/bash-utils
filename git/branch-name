@@ -2,11 +2,13 @@
 
 # Get the name of the current branch in this GIT repo
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
+
 branch_name=`git status | grep "On branch" | cut -d\  -f 3`
 
-if [ "$branch_name" == "" ]; then
-        echo "This isn't a GIT repository"
-        exit 1
+if [[ "$branch_name" == "" ]]; then
+        fail "This isn't a GIT repository"
 fi
 
 echo ${branch_name}

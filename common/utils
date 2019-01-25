@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+log() {
+    echo "[BU] $*"
+}
+
+fail() {
+    echo "[BU] $*" >&2
+    exit 1
+}

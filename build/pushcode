@@ -15,11 +15,10 @@ update_from_master="${BUILD_SCRIPTS_DIR}/../git/update-from-master"
 check_for_local_changes() {
     commit_output=`git status | grep "nothing to commit"`
 
-    echo "Ensuring there are no local changes..."
+    log "Ensuring there are no local changes..."
 
     if [[ "$commit_output" == "" ]]; then
-        echo "You have local changes, pushing is not safe."
-        exit 1
+        fail "You have local changes, pushing is not safe."
     fi
 }
 
