@@ -3,18 +3,23 @@
 # Identify the type of build tool that we have and run it
 
 if [[ -f "build.sh" ]]; then
+    type="custom script"
     cmd="./build.sh"
 elif [[ -f "pom.xml" ]]; then
+    type="maven"
     cmd="mvn clean install"
 elif [[ -f "build.sbt" ]]; then
+    type="sbt"
     cmd="sbt test it:test func:test"
 elif [[ -f "build.gradle" ]]; then
+    type="gradle"
     cmd="gradle clean install"
 else
     echo "Could not determine the type of build to run, are you in the right folder?"
     exit -1
 fi
 
+echo "Running ${type} build..."
 ${cmd}
 result=$?
 

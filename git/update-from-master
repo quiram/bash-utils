@@ -4,6 +4,8 @@
 
 branch_name=$(branch-name)
 
+echo "Rebasing from master..."
+
 if [ "${branch_name}" = "master" ]; then
     git pull -r
 else
