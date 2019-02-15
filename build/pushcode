@@ -22,15 +22,32 @@ check_for_local_changes() {
     fi
 }
 
+usage_and_exit() {
+    echo "Usage: $0 [--force]"
+    echo "    Push changes to remote after running the build and running some local checks."
+    echo "    --force: (optional) don't rebase before pushing, and push with git --force"
+    exit 1
+}
+
+if [[ $# -gt 1 || $# -eq 1 && ! $1 == "--force" ]]; then
+    usage_and_exit
+fi
+
+if [[ $# -eq 1 ]]; then
+    force=1
+    options="--force"
+fi
 
 # make sure everything has been committed
 check_for_local_changes
 
-# rebase only if there is a remote to rebase from
-rebase_if_remote
+if [[ -z ${force} ]]; then
+    # rebase only if there is a remote to rebase from
+    rebase_if_remote
 
-# rebase from master (only effective if we're on a branch)
-${update_from_master} || exit 1
+    # rebase from master (only effective if we're on a branch)
+    ${update_from_master} || exit 1
+fi
 
 # run the build
 ${run_full_build} || exit 1
@@ -39,5 +56,5 @@ ${run_full_build} || exit 1
 check_for_local_changes
 
 # ...and push
-push_changes
+push_changes ${options}
 

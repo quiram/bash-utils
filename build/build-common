@@ -15,12 +15,13 @@ rebase_if_remote() {
 }
 
 push_changes() {
+    options=$*
     remote=$(remote-branch-name)
 
     log "Pushing changes..."
     if [[ -z "${remote}" ]]; then
         git push --set-upstream origin $(branch-name) || exit 1
     else
-        git push || exit 1
+        git push ${options} || exit 1
     fi
 }
