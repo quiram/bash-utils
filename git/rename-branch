@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Rename current branch
+
+usage_and_exit() {
+    echo "Usage: $0 <new-name>"
+    echo "    Rename current branch to <new-name>"
+    exit 1
+}
+
+if [[ ! $# -eq 1 ]]; then
+    usage_and_exit
+fi
+
+new_name=$1
+
+git branch -m "${new_name}"
