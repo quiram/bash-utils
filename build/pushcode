@@ -44,10 +44,10 @@ check_for_local_changes
 if [[ -z ${force} ]]; then
     # rebase only if there is a remote to rebase from
     rebase_if_remote
-
-    # rebase from master (only effective if we're on a branch)
-    ${update_from_master} || exit 1
 fi
+
+# rebase from master
+${update_from_master} || exit 1
 
 # run the build
 ${run_full_build} || exit 1
