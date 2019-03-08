@@ -5,7 +5,6 @@
 git clone https://github.com/quiram/bash-utils.git
 cd bash-utils
 ./make-available
-source $HOME/.bashrc || source $HOME/.bash_profile
 ```
 Enjoy bash-utils :)
 
