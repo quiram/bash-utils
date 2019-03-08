@@ -5,6 +5,17 @@
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${BUILD_SCRIPTS_DIR}/../common/utils"
 
+if [[ $# -gt 1 || $# -eq 1 && ! $1 == "--safe" ]]; then
+    echo "Usage: $0 [--safe]"
+    echo "    Updates the current branch with the latest master value (in remote)"
+    echo "    --safe: (optional) run a full build after applying each commit"
+    exit 1
+fi
+
+if [[ $# -eq 1 ]]; then
+    options="--exec \"run-full-build\""
+fi
+
 branch_name=$(branch-name)
 
 log "Rebasing from master..."
@@ -12,6 +23,6 @@ log "Rebasing from master..."
 if [[ "${branch_name}" = "master" ]]; then
     git pull -r
 else
-    git checkout master && git pull -r && git checkout ${branch_name} && git rebase master
+    git checkout master && git pull -r && git checkout ${branch_name} && git rebase ${options} master
 fi
 
