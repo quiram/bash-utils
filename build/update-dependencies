@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Update all dependencies in the existing Maven project
+
+usage_and_exit() {
+    echo "Usage: $0 [--major | --minor | --patch]"
+    echo "    Update all the dependencies in the existing Maven project."
+    echo "    --major: (optional) allow updates of the major number in the dependency"
+    echo "    --minor: (optional, default) allow updates of the minor number in the dependency, don't update the major number"
+    echo "    --patch: (optional) allow updates of the patch number in the dependency, don't update major nor minor numbers"
+    exit 1
+}
+
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
+
+# Only maven supported
+[[ -f "pom.xml" ]] || fail "This doesn't seem to be a maven project"
+
+# Versions plugin needs to be there
+mvn versions:help >/dev/null 2>&1 || fail "Versions plugin isn't configured in pom.xml"
+
+# Check options
+case $# in
+    0)
+        option="--minor"
+        ;;
+    1)
+        option=$1
+        ;;
+    *)
+        usage_and_exit
+        ;;
+esac
+
+case ${option} in
+    "--major")
+        options="-DallowMajorUpdates=true -DallowMinorUpdates=true -DllowIncrementalUpdates=true"
+        ;;
+    "--minor")
+        options="-DallowMajorUpdates=false -DallowMinorUpdates=true -DllowIncrementalUpdates=true"
+        ;;
+    "--patch")
+        options="-DallowMajorUpdates=false -DallowMinorUpdates=false -DllowIncrementalUpdates=true"
+        ;;
+    *)
+        usage_and_exit
+        ;;
+esac
+
+mvn versions:use-latest-releases ${options}
+
