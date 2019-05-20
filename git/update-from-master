@@ -5,15 +5,34 @@
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${BUILD_SCRIPTS_DIR}/../common/utils"
 
-if [[ $# -gt 1 || $# -eq 1 && ! $1 == "--safe" ]]; then
-    echo "Usage: $0 [--safe]"
+usage_and_exit() {
+    echo "Usage: $0 [--safe] [--stash]"
     echo "    Updates the current branch with the latest master value (in remote)"
     echo "    --safe: (optional) run a full build after applying each commit"
+    echo "    --stash: (optional) stash local changes prior to updating from master; pop them after successfully updating."
     exit 1
+}
+
+if [[ $# -gt 2 ]]; then
+    usage_and_exit
 fi
 
-if [[ $# -eq 1 ]]; then
-    options="--exec \"run-full-build\""
+for option in $*; do
+    case ${option} in
+        "--safe")
+            options="--exec \"run-full-build\""
+            ;;
+        "--stash")
+            stash=1
+            ;;
+        *)
+            usage_and_exit
+            ;;
+    esac
+done
+
+if [[ "${stash}" -eq 1 ]]; then
+    git stash
 fi
 
 branch_name=$(branch-name)
@@ -21,8 +40,12 @@ branch_name=$(branch-name)
 log "Rebasing from master..."
 
 if [[ "${branch_name}" = "master" ]]; then
-    git pull -r
+    git pull -r ${options}
 else
     git checkout master && git pull -r && git checkout ${branch_name} && git rebase ${options} master
+fi
+
+if [[ "${stash}" -eq 1 ]]; then
+    git stash pop
 fi
 
