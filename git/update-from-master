@@ -32,6 +32,7 @@ for option in $*; do
 done
 
 if [[ "${stash}" -eq 1 ]]; then
+    log "Stashing current work..."
     git stash
 fi
 
@@ -41,11 +42,19 @@ log "Rebasing from master..."
 
 if [[ "${branch_name}" = "master" ]]; then
     git pull -r ${options}
+    result=$?
 else
     git checkout master && git pull -r && git checkout ${branch_name} && git rebase ${options} master
+    result=$?
 fi
 
 if [[ "${stash}" -eq 1 ]]; then
-    git stash pop
+    if [[ ${result} -eq 0 ]]; then
+        log "Retrieving work from stash..."
+        git stash pop
+    else
+        echo "Error updating from master, pre-existing work is still stashed."
+    fi
 fi
 
+exit ${result}
