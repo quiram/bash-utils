@@ -10,7 +10,7 @@ if [[ -f "build.sh" ]]; then
     cmd="./build.sh"
 elif [[ -f "pom.xml" ]]; then
     type="maven"
-    cmd="mvn clean install"
+    cmd="mvn -Dsurefire.rerunFailingTestsCount=3 clean install"
 elif [[ -f "build.sbt" ]]; then
     type="sbt"
     cmd="sbt test it:test func:test"
