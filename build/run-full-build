@@ -9,8 +9,9 @@ if [[ -f "build.sh" ]]; then
     type="custom script"
     cmd="./build.sh"
 elif [[ -f "pom.xml" ]]; then
+    retries=3
     type="maven"
-    cmd="mvn -Dsurefire.rerunFailingTestsCount=3 clean install"
+    cmd="mvn -Dsurefire.rerunFailingTestsCount=${retries} -Dfailsafe.rerunFailingTestsCount=${retries} clean install"
 elif [[ -f "build.sbt" ]]; then
     type="sbt"
     cmd="sbt test it:test func:test"
