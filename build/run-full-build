@@ -10,16 +10,14 @@ if [[ -f "build.sh" ]]; then
     type="custom script"
     cmd="./build.sh $*"
 elif [[ -f "pom.xml" ]]; then
-    # Retries only work for Junit 4 for now, see https://issues.apache.org/jira/browse/SUREFIRE-1584
-    retries=3
     type="maven"
-    cmd="mvn -Dsurefire.rerunFailingTestsCount=${retries} -Dfailsafe.rerunFailingTestsCount=${retries} $* clean install"
+    cmd="mvn $* clean install"
 elif [[ -f "build.sbt" ]]; then
     type="sbt"
     cmd="sbt $* test it:test func:test"
 elif [[ -f "build.gradle" ]]; then
     type="gradle"
-    cmd="gradle $* clean install"
+    cmd="./gradlew $* clean test"
 else
     fail "Could not determine the type of build to run, are you in the right folder?"
 fi
