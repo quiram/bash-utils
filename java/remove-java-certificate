@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/java-commons"
+
+usage_and_exit() {
+    echo "Usage: $0 <alias>"
+    echo "    <alias> an alias for this certificate (must be unique within the store)"
+    exit 1
+}
+
+alias=$1
+
+[[ -z "${alias}" ]] && usage_and_exit
+
+sudo keytool -delete -alias ${alias} ${cacerts_locator}

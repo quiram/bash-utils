@@ -1,3 +1,4 @@
 # IntelliJ project files
 .idea
 /java/import-all-certs
+/java/remove-all-certs
