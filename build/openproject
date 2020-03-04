@@ -10,5 +10,5 @@ popd
 
 rebase_if_remote
 
-idea . &
+idea . 
 
