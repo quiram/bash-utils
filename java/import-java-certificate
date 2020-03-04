@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/java-commons"
+
+
 usage_and_exit() {
     echo "Usage: $0 <alias> <cert-file>"
     echo "    <alias> an alias for this certificate (must be unique within the store)"
@@ -11,13 +15,5 @@ alias=$1
 file=$2
 
 [[ -z "${file}" || -z "${alias}" ]] && usage_and_exit
-[[ -z "${JAVA_HOME}" ]] && echo "JAVA_HOME isn't set, cannot locate keystore" && exit 1
-version=$(java -version 2>&1 | grep version | cut -f2 -d\" | cut -f1 -d\.)
-
-if [[ ${version} -gt 10 ]]; then
-    cacerts_locator="-cacerts"
-else
-    cacerts_locator="-keystore ${JAVA_HOME}/jre/lib/security/cacerts"
-fi
 
 sudo keytool -importcert -file "${file}" -alias ${alias} ${cacerts_locator}
