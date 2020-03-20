@@ -29,14 +29,25 @@ usage_and_exit() {
     exit 1
 }
 
-if [[ $# -gt 1 || $# -eq 1 && ! $1 == "--force" ]]; then
+if [[ $# -gt 2 ]]; then
     usage_and_exit
 fi
 
-if [[ $# -eq 1 ]]; then
-    force=1
-    options="--force"
-fi
+for option in $*; do
+    case ${option} in
+        "--safe")
+            update_options="--safe"
+            ;;
+        "--force")
+            force=1
+            git_options="--force"
+            ;;
+        *)
+            usage_and_exit
+            ;;
+    esac
+done
+
 
 # make sure everything has been committed
 check_for_local_changes
@@ -47,14 +58,14 @@ if [[ -z ${force} ]]; then
 fi
 
 # rebase from master
-${update_from_master} || exit 1
+${update_from_master} ${update_options} || exit 1
 
-# run the build
-${run_full_build} || exit 1
+# run the build (if needed)
+[[ -z ${update_options} ]] && ( ${run_full_build} || exit 1 )
 
 # check again, in case the build has reformatted files
 check_for_local_changes
 
 # ...and push
-push_changes ${options}
+push_changes ${git_options}
 
