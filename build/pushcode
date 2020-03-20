@@ -61,7 +61,9 @@ fi
 ${update_from_master} ${update_options} || exit 1
 
 # run the build (if needed)
-[[ -z ${update_options} ]] && ( ${run_full_build} || exit 1 )
+if [[ -z ${update_options} ]]; then
+    ${run_full_build} || exit 1
+fi
 
 # check again, in case the build has reformatted files
 check_for_local_changes
