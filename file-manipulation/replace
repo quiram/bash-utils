@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+usage_and_exit() {
+    echo "Usage: $0 old-string new-string"
+    echo "    Recursively replaces old-string with new-string in all files in the current folder (and subfolders)"
+    echo "    old-string: the value to be replaced (cannot be empty)"
+    echo "    new-string: the value to replace it with (can be empty)"
+    exit 1
+}
+
+if [[ $# -ne 2 || -z "$1" ]]; then
+  usage_and_exit
+fi
+
+old_string=$1
+new_string=$2
+
+grep -rl "${old_string}" * | xargs -d '\n' -i$ sed -i".back" "s@${old_string}@${new_string}@g" $
+find . -name "*.back" -exec rm "{}" \;
