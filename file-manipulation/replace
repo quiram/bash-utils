@@ -15,5 +15,5 @@ fi
 old_string=$1
 new_string=$2
 
-grep -rl "${old_string}" * | xargs -d '\n' -i$ sed -i".back" "s@${old_string}@${new_string}@g" $
+grep -rl "${old_string}" . | xargs -d '\n' -i$ sed -i".back" "s@${old_string}@${new_string}@g" $
 find . -name "*.back" -exec rm "{}" \;
