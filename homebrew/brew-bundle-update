@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
+
+BREWFILE="$HOME/Brewfile"
+# shellcheck disable=SC2088
+[ -f "${BREWFILE}" ] || fail "~/Brewfile not found"
+
+log "Updating Brew formulae"
+brew update
+
+log "Clean up unneeded packages"
+brew bundle --file "${BREWFILE}" cleanup --force
+
+log "Install/update required packages"
+brew bundle --file "${BREWFILE}" install
+
