@@ -2,13 +2,14 @@
 
 # Updates a number of branches that have been created in chain, starting from master
 
-BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BUILD_SCRIPTS_DIR}/../common/utils"
 
 usage_and_exit() {
-    echo "Usage: $0 [--safe] [branch-1 branch-2 branch-3 ...]"
+    echo "Usage: $0 [--safe] [--interactive] [branch-1 branch-2 branch-3 ...]"
     echo "    Updates a number of branches in sequence from master"
     echo "    --safe: (optional) run a full build on each branch after rebasing"
+    echo "    --interactive: (optional) do interactive rebase"
     echo "    branch-1: the branch that was created off master"
     echo "    branch-2: a branch created off branch-1"
     echo "    branch-3: a branch created off branch-2"
@@ -17,24 +18,31 @@ usage_and_exit() {
 }
 
 execute() {
-  eval "$* || fail \"Failed to run: $*\""
+    eval "$* || fail \"Failed to run: $*\""
 }
 
-if [[ $# -eq 0 || $# -eq 1 && $1 == "--safe" ]]; then
+if [[ $# -eq 0 ]]; then
     usage_and_exit
 fi
 
 run_build=0
+interactive=""
 execute "git checkout master && git pull -r"
 previous_branch=master
 
 for branch in "$@"; do
-    if [[ $branch == "--safe" ]]; then
-      run_build=1
-    else
-      current_branch=${NEW_BRANCH_PREFIX}${branch}
-      execute "git checkout ${current_branch} && git rebase $previous_branch"
-      [[ $run_build -eq 1 ]] && execute "run-full-build"
-      previous_branch=${current_branch}
-    fi
+    case $branch in
+    "--safe")
+        run_build=1
+        ;;
+    "--interactive")
+        interactive="-i"
+        ;;
+    *)
+        current_branch=${NEW_BRANCH_PREFIX}${branch}
+        execute "git checkout ${current_branch} && git rebase $interactive $previous_branch"
+        [[ $run_build -eq 1 ]] && execute "run-full-build"
+        previous_branch=${current_branch}
+        ;;
+    esac
 done
