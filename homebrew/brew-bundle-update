@@ -13,6 +13,8 @@ brew update
 log "Clean up unneeded packages"
 brew bundle --file "${BREWFILE}" cleanup --force
 
-log "Install/update required packages"
+log "Ensure required packages are installed"
 brew bundle --file "${BREWFILE}" install
 
+log "Upgrade existing packages to latest"
+brew upgrade
