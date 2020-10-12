@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../common/utils
 source "${BUILD_SCRIPTS_DIR}/../common/utils"
 
 BREWFILE="$HOME/Brewfile"
