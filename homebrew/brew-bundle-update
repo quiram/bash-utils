@@ -11,11 +11,8 @@ BREWFILE="$HOME/Brewfile"
 log "Updating Brew formulae"
 brew update
 
-log "Clean up unneeded packages"
-brew bundle --file "${BREWFILE}" cleanup --force
-
-log "Ensure required packages are installed"
-brew bundle --file "${BREWFILE}" install
+log "Ensure only required packages are installed"
+brew bundle --file "${BREWFILE}" --cleanup install
 
 log "Upgrade existing packages to latest"
 brew upgrade
