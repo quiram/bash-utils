@@ -17,9 +17,9 @@ fail() {
 #
 #     $silentExecExitCode: variable containing the exit code of the command executed by silentExec
 silentExec() {
-  text=$1
-  command=$2
-  stopOnFailure=${3-"true"}
+  local text=$1
+  local command=$2
+  local stopOnFailure=${3-"true"}
   echo -n "${text}... "
   eval "${command} >/dev/null 2>&1" >/dev/null 2>&1
   silentExecExitCode=$?
