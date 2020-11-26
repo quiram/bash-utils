@@ -14,14 +14,16 @@ fail() {
 #     <message>: message to display to the user (command's output is suppressed)
 #     <command>: command to execute
 #     [stop-on-failure]: (optional) whether to stop the script on failure or carry on (defaults to true)
+#
+#     $silentExecExitCode: variable containing the exit code of the command executed by silentExec
 silentExec() {
   text=$1
   command=$2
   stopOnFailure=${3-"true"}
   echo -n "${text}... "
   eval "${command} >/dev/null 2>&1" >/dev/null 2>&1
-  exitCode=$?
-  if [[ ${exitCode} == 0 ]]; then
+  silentExecExitCode=$?
+  if [[ ${silentExecExitCode} == 0 ]]; then
     echo -e "\033[1;92mOK\033[m"
   else
     echo -e "\033[1;31mERROR\033[m"
