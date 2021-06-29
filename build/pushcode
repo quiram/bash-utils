@@ -5,15 +5,14 @@
 # 2. run full build locally
 # 3. push
 
-
-BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BUILD_SCRIPTS_DIR}/build-common"
 
 run_full_build="${BUILD_SCRIPTS_DIR}/run-full-build"
 update_from_master="${BUILD_SCRIPTS_DIR}/../git/update-from-master"
 
 check_for_local_changes() {
-    commit_output=`git status | grep "nothing to commit"`
+    commit_output=$(git status | grep "nothing to commit")
 
     log "Ensuring there are no local changes..."
 
@@ -33,7 +32,7 @@ if [[ $# -gt 2 ]]; then
     usage_and_exit
 fi
 
-for option in $*; do
+for option in "$@"; do
     case ${option} in
         "--safe")
             update_options="--safe"
@@ -42,12 +41,14 @@ for option in $*; do
             force=1
             git_options="--force"
             ;;
+        "--skip-build")
+            skip_build=1
+            ;;
         *)
             usage_and_exit
             ;;
     esac
 done
-
 
 # make sure everything has been committed
 check_for_local_changes
@@ -61,7 +62,7 @@ fi
 ${update_from_master} ${update_options} || exit 1
 
 # run the build (if needed)
-if [[ -z ${update_options} ]]; then
+if [[ -z ${update_options} && -z ${skip_build} ]]; then
     ${run_full_build} || exit 1
 fi
 
@@ -70,4 +71,3 @@ check_for_local_changes
 
 # ...and push
 push_changes ${git_options}
-
