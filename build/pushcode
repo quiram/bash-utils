@@ -25,6 +25,8 @@ usage_and_exit() {
     echo "Usage: $0 [--force]"
     echo "    Push changes to remote after running the build and running some local checks."
     echo "    --force: (optional) don't rebase before pushing, and push with git --force"
+    echo "    --safe: (optional) run the build after each commit when rebasing from master"
+    echo "    --skip-build: (optional) don't run the build prior to pushing"
     exit 1
 }
 
