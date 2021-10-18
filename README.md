@@ -10,7 +10,9 @@ Enjoy bash-utils :)
 
 ## Details
 Useful bits of Bash code, separated by categories. Each folder will have a number of scripts, each of them with comments
-at the beginning explaining objective and usage.
+at the beginning explaining objective and usage. For a longer explanation check the following presentation:
+
+[![Power up your development experience with Bash scripts](http://img.youtube.com/vi/engxUm-Cji4/0.jpg)](https://youtu.be/engxUm-Cji4 "Power up your development experience with Bash scripts")
 
 Many of the commands support defaults in the form of environment variables, check them out!
 
