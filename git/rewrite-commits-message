@@ -19,4 +19,4 @@ from_commit=$3
 
 sed_command="sed s/\"${old_string}\"/\"${new_string}\"/g"
 
-git filter-branch -f --msg-filter "${sed_command}" ${from_commit}..
+git filter-branch -f --msg-filter "${sed_command}" "${from_commit}"..
