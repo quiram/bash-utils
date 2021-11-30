@@ -19,7 +19,7 @@ usage_and_exit() {
 
 if [ $# -eq 1 ]; then
     new_branch_name=$1
-elif [ $# -eq 0 -a -n "${DEFAULT_NEW_BRANCH_NAME}" ]; then
+elif [ $# -eq 0 ] && [ -n "${DEFAULT_NEW_BRANCH_NAME}" ]; then
     new_branch_name=${DEFAULT_NEW_BRANCH_NAME}
 else
     usage_and_exit

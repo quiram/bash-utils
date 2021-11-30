@@ -22,7 +22,7 @@ case $# in
     1)
         if [[ "$1" = "--safe" ]]; then
             commits=5
-            options="--exec \"run-full-build\""
+            options="--exec run-full-build"
         else
             commits=$1
         fi
@@ -30,7 +30,7 @@ case $# in
     2)
         if [[ $1 == "--safe" ]]; then
             commits=$2
-            options="--exec \"run-full-build\""
+            options="--exec run-full-build"
         else
             usage_and_exit
         fi
@@ -45,5 +45,6 @@ esac
 # Note: using the numeric comparator (-eq) on non-numbers fails, so "$x -eq $x" is works to verify whether $x is a number
 [[ "${commits}" -eq "${commits}" && "${commits}" -gt "0" ]] 2>/dev/null || usage_and_exit
 
+# shellcheck disable=SC2086
 git rebase -i ${options} HEAD~${commits}
 

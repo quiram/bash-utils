@@ -39,8 +39,9 @@ case $# in
 esac
 
 git bisect start && \
-git bisect old $old && \
-git bisect new $new && \
+git bisect old "$old" && \
+git bisect new "$new" && \
+# shellcheck disable=SC2086
 git bisect run run-full-build ${run_options} && \
 git bisect reset
 
