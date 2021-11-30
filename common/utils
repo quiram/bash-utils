@@ -4,9 +4,15 @@ log() {
   echo "[BU] $*"
 }
 
+# The following allows us to kill the running script regardless of the level of function nesting.
+# Otherwise, each function creates a subshell, and running "exit 1" on the subshell simply exists the subshell, not the overall program
+# See https://stackoverflow.com/a/9894126/2302613
+trap "exit 1" TERM
+export TOP_PID=$$
+
 fail() {
   echo "[BU] $*" >&2
-  exit 1
+  kill -s TERM $TOP_PID
 }
 
 # Usage:
