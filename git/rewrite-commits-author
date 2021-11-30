@@ -2,6 +2,9 @@
 
 # Based largely on https://stackoverflow.com/a/750182/2302613
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
 help() {
 	echo "$0 <old-email> <new-email>"
 	echo "change committer for the current repository from <old-email> to <new-email>"

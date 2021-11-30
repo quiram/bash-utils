@@ -2,6 +2,9 @@
 
 # Bulk-rewrite the message of any number of commits via a search-and-replace pattern
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
 usage_and_exit() {
     echo "Usage: $0 <old-string> <new-string> <start-commit>"
     echo "    Scan all commits from <start-commit> (not included!) and replace <old-string> for <new-string> "

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../common/utils
+source "${BUILD_SCRIPTS_DIR}/../common/utils"
+
+error=$(git status 2>&1 | grep "fatal: not a git repository")
+[ -z "$error" ] || fail "This isn't a GIT repository"

@@ -3,7 +3,7 @@
 # Updates the current branch with the latest master value (in remote)
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source "${BUILD_SCRIPTS_DIR}/../common/utils"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
 
 usage_and_exit() {
     echo "Usage: $0 [--safe] [--stash]"

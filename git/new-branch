@@ -8,6 +8,8 @@
 # You can also default the branch name into an environment variable, useful if you work across several repositories
 # and you want your branches to have the same name across all of them.
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
 
 usage_and_exit() {
     echo "Usage: $0 <new-branch-name>"

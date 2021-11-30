@@ -3,6 +3,9 @@
 # Edit the recent commit history of this GIT repository
 # If no number of commits to edit is specified, it will be defaulted to 5
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
 usage_and_exit() {
     echo "Usage: $0 [--safe] [number-of-commits]"
     echo "    Edit the recent commit history of this GIT repository"

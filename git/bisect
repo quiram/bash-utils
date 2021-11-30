@@ -2,6 +2,9 @@
 
 # Runs a git bisect, optionally restricting the tests that are actually run (maven only)
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
 usage_and_exit() {
     echo "Usage: $0 old-commit [new-commit [--it-test test-pattern | command]]"
     echo "    Runs a git bisect, optionally restricting to the test(s) indicated in the pattern"

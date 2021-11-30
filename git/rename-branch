@@ -2,6 +2,9 @@
 
 # Rename current branch
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
 usage_and_exit() {
     echo "Usage: $0 <new-name>"
     echo "    Rename current branch to <new-name>"

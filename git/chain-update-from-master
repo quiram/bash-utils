@@ -3,7 +3,7 @@
 # Updates a number of branches that have been created in chain, starting from master
 
 BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${BUILD_SCRIPTS_DIR}/../common/utils"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
 
 usage_and_exit() {
     echo "Usage: $0 [--safe] [--interactive] [branch-1 branch-2 branch-3 ...]"

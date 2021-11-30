@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
 git status -sb | grep "\.\.\." | cut -d\. -f 4
