@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Updates the current branch with the latest master value (in remote)
+# Updates the current branch with the latest main value (in remote)
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${BUILD_SCRIPTS_DIR}/../git/utils"
 
 usage_and_exit() {
     echo "Usage: $0 [--safe] [--stash]"
-    echo "    Updates the current branch with the latest master value (in remote)"
+    echo "    Updates the current branch with the latest main value (in remote)"
     echo "    --safe: (optional) run a full build after applying each commit"
-    echo "    --stash: (optional) stash local changes prior to updating from master; pop them after successfully updating."
+    echo "    --stash: (optional) stash local changes prior to updating from main; pop them after successfully updating."
     exit 1
 }
 
@@ -38,15 +38,16 @@ fi
 
 branch_name=$(branch-name)
 
-log "Rebasing from master..."
+log "Rebasing from main..."
 
-if [[ "${branch_name}" = "master" ]]; then
+# shellcheck disable=SC2154
+if [[ "${branch_name}" = "${main}" ]]; then
     # shellcheck disable=SC2086
     git pull -r ${options}
     result=$?
 else
     # shellcheck disable=SC2086
-    git checkout master && git pull -r && git checkout "${branch_name}" && git rebase ${options} master
+    git checkout ${main} && git pull -r && git checkout "${branch_name}" && git rebase ${options} ${main}
     result=$?
 fi
 
@@ -55,7 +56,7 @@ if [[ "${stash}" -eq 1 ]]; then
         log "Retrieving work from stash..."
         git stash pop
     else
-        echo "Error updating from master, pre-existing work is still stashed."
+        echo "Error updating from main, pre-existing work is still stashed."
     fi
 fi
 

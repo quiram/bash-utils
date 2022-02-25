@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Updates a number of branches that have been created in chain, starting from master
+# Updates a number of branches that have been created in chain, starting from main
 
 BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BUILD_SCRIPTS_DIR}/../git/utils"
 
 usage_and_exit() {
     echo "Usage: $0 [--safe] [--interactive] [branch-1 branch-2 branch-3 ...]"
-    echo "    Updates a number of branches in sequence from master"
+    echo "    Updates a number of branches in sequence from main"
     echo "    --safe: (optional) run a full build on each branch after rebasing"
     echo "    --interactive: (optional) do interactive rebase"
-    echo "    branch-1: the branch that was created off master"
+    echo "    branch-1: the branch that was created off main"
     echo "    branch-2: a branch created off branch-1"
     echo "    branch-3: a branch created off branch-2"
     echo "    branch-n: a branch created off branch-(n-1)"
@@ -27,8 +27,9 @@ fi
 
 run_build=0
 interactive=""
-execute "git checkout master && git pull -r"
-previous_branch=master
+# shellcheck disable=SC2154
+execute "git checkout ${main} && git pull -r"
+previous_branch=${main}
 
 for branch in "$@"; do
     case $branch in

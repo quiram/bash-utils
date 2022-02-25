@@ -9,7 +9,7 @@ BUILD_SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BUILD_SCRIPTS_DIR}/build-common"
 
 run_full_build="${BUILD_SCRIPTS_DIR}/run-full-build"
-update_from_master="${BUILD_SCRIPTS_DIR}/../git/update-from-master"
+update_from_main="${BUILD_SCRIPTS_DIR}/../git/update-from-main"
 
 check_for_local_changes() {
     commit_output=$(git status | grep "nothing to commit")
@@ -25,7 +25,7 @@ usage_and_exit() {
     echo "Usage: $0 [--force]"
     echo "    Push changes to remote after running the build and running some local checks."
     echo "    --force: (optional) don't rebase before pushing, and push with git --force"
-    echo "    --safe: (optional) run the build after each commit when rebasing from master"
+    echo "    --safe: (optional) run the build after each commit when rebasing from main"
     echo "    --skip-build: (optional) don't run the build prior to pushing"
     exit 1
 }
@@ -60,8 +60,8 @@ if [[ -z ${force} ]]; then
     rebase_if_remote
 fi
 
-# rebase from master
-${update_from_master} ${update_options} || exit 1
+# rebase from main
+${update_from_main} ${update_options} || exit 1
 
 # run the build (if needed)
 if [[ -z ${update_options} && -z ${skip_build} ]]; then

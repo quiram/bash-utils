@@ -27,6 +27,7 @@ fi
 
 current_branch_name=$(branch-name)
 
-[ "${current_branch_name}" = "master" ] || echo "WARNING: creating new branch from another branch (${current_branch_name})."
+# shellcheck disable=SC2154
+[ "${current_branch_name}" = "${main}" ] || echo "WARNING: creating new branch from another branch (${current_branch_name})."
 
 git checkout -b "${NEW_BRANCH_PREFIX}${new_branch_name}"
