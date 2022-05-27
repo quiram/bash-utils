@@ -20,8 +20,9 @@ push_changes() {
 
     log "Pushing changes..."
     if [[ -z "${remote}" ]]; then
-        git push --set-upstream origin $(branch-name) || exit 1
+        git push --set-upstream origin "$(branch-name)" || exit 1
     else
+        # shellcheck disable=SC2086
         git push ${options} || exit 1
     fi
 }

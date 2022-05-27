@@ -4,11 +4,11 @@
 
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd "${BUILD_SCRIPTS_DIR}"
+pushd "${BUILD_SCRIPTS_DIR}" || exit
 source ./build-common
-popd
+popd || exit
 
 rebase_if_remote
 
-idea . 
+idea .
 
