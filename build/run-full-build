@@ -8,22 +8,27 @@ source "${BUILD_SCRIPTS_DIR}/../common/utils"
 
 if [[ -f "build.sh" ]]; then
     type="custom script"
-    cmd="./build.sh $*"
+    cmds=("./build.sh $*")
 elif [[ -f "pom.xml" ]]; then
     type="maven"
-    cmd="mvn $* clean verify"
+    cmds=("mvn $* clean verify")
 elif [[ -f "build.sbt" ]]; then
     type="sbt"
-    cmd="sbt $* test it:test func:test"
+    cmds=("sbt $* test it:test func:test")
 elif [[ -f "build.gradle" ]]; then
     type="gradle"
-    cmd="./gradlew $* clean test"
+    cmds=("./gradlew $* clean test")
+elif [[ -f "package.json" ]]; then
+    type="node"
+    cmds=("npm install" "npm run build")
 else
     fail "Could not determine the type of build to run, are you in the right folder?"
 fi
 
-log "Running ${type} build as '${cmd}'"
-${cmd}
+log "Running ${type} build as '${cmds[*]}'"
+for cmd in "${cmds[@]}"; do
+    ${cmd}
+done
 result=$?
 
 echo -e "\a\a\a"
