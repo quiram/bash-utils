@@ -7,9 +7,9 @@ source "${BUILD_SCRIPTS_DIR}/../common/utils"
 error=$(git status 2>&1 | grep "fatal: not a git repository")
 [ -z "$error" ] || fail "This isn't a GIT repository"
 
-maybe_master=$(git branch --list | grep master)
-if [ -z "${maybe_master}" ]; then
-    export main="main"
-else
+maybe_main=$(git branch --list | grep main)
+if [ -z "${maybe_main}" ]; then
     export main="master"
+else
+    export main="main"
 fi
