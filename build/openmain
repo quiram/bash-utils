@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Switch to main branch and open project
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
+# shellcheck disable=SC2154
+git checkout "${main}" && openproject
