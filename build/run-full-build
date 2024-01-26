@@ -11,7 +11,7 @@ if [[ -f "build.sh" ]]; then
     cmds=("./build.sh $*")
 elif [[ -f "pom.xml" ]]; then
     type="maven"
-    cmds=("mvn $* clean verify")
+    cmds=("mvn $* clean install")
 elif [[ -f "build.sbt" ]]; then
     type="sbt"
     cmds=("sbt $* test it:test func:test")
