@@ -9,6 +9,8 @@ cd bash-utils
 Enjoy bash-utils :)
 
 ## Details
+Check also the ongoing port to zsh: [zsh-utils](https://github.com/quiram/zsh-utils).
+
 Useful bits of Bash code, separated by categories. Each folder will have a number of scripts, each of them with comments
 at the beginning explaining objective and usage. For a longer explanation check the following presentation:
 
