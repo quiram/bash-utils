@@ -5,4 +5,4 @@
 BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${BUILD_SCRIPTS_DIR}/../git/utils"
 
-git status | grep "On branch" | cut -d\  -f 3
+git symbolic-ref --short HEAD
