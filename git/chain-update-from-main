@@ -28,7 +28,7 @@ fi
 run_build=0
 interactive=""
 # shellcheck disable=SC2154
-execute "git checkout ${main} && git pull -r"
+execute "git switch ${main} && git pull -r"
 previous_branch=${main}
 
 for branch in "$@"; do
@@ -41,7 +41,7 @@ for branch in "$@"; do
         ;;
     *)
         current_branch=${NEW_BRANCH_PREFIX}${branch}
-        execute "git checkout ${current_branch} && git rebase $interactive $previous_branch"
+        execute "git switch ${current_branch} && git rebase $interactive $previous_branch"
         [[ $run_build -eq 1 ]] && execute "run-full-build"
         previous_branch=${current_branch}
         ;;

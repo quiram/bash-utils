@@ -47,7 +47,7 @@ if [[ "${branch_name}" = "${main}" ]]; then
     result=$?
 else
     # shellcheck disable=SC2086
-    git checkout ${main} && git pull -r && git checkout "${branch_name}" && git rebase ${options} ${main}
+    git switch ${main} && git pull -r && git switch "${branch_name}" && git rebase ${options} ${main}
     result=$?
 fi
 
