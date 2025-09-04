@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This utility updates jenv file with the available Java installations assuming:
+#   - the different available Java kits are all OpenJDK
+#   - the different available Java kits are all installed using Homebrew
+
+#!/usr/bin/env bash
+
+while IFS= read -r -d '' jdk; do
+  while IFS= read -r existing_version; do
+    echo "Removing $existing_version"
+    jenv remove "$existing_version"
+  done < <(jenv add "$jdk" | awk '/already present/ {print $2}')
+
+  echo "Adding $jdk"
+  jenv add "$jdk"
+done < <(find /opt/homebrew/Cellar -maxdepth 2 -mindepth 2 -path "*openjdk*" -type d -print0)
