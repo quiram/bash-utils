@@ -38,10 +38,12 @@ case $# in
         ;;
 esac
 
+current_dir=$(pwd)
+
 git bisect start && \
 git bisect old "$old" && \
 git bisect new "$new" && \
 # shellcheck disable=SC2086
-git bisect run run-full-build ${run_options} && \
+git bisect run sh -c "cd ${current_dir} && run-full-build ${run_options}" && \
 git bisect reset
 
