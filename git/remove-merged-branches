@@ -18,6 +18,6 @@ branch_name=$(branch-name)
 
 # Variable main defined in git/utils
 # shellcheck disable=SC2154
-[[ ${branch_name} -eq ${main} ]] || usage_and_exit
+[ "${branch_name}" == "${main}" ] || usage_and_exit
 
 git branch --merged origin/"${main}" | grep -vE "^\s*(\*|${main})" | xargs -n 1 git branch -d
