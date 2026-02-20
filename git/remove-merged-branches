@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Finds branches that have already been merged to main and removes them
+# Taken from https://spencer.wtf/2026/02/20/cleaning-up-merged-git-branches-a-one-liner-from-the-cias-leaked-dev-docs.html
+
+BUILD_SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${BUILD_SCRIPTS_DIR}/../git/utils"
+
+usage_and_exit() {
+    echo "Usage: $0"
+    echo "    Removes branches that have already been merged to main."
+    echo "    This command can only be run from the main branch."
+    exit 1
+}
+
+
+branch_name=$(branch-name)
+
+# Variable main defined in git/utils
+# shellcheck disable=SC2154
+[[ ${branch_name} -eq ${main} ]] || usage_and_exit
+
+git branch --merged origin/"${main}" | grep -vE "^\s*(\*|${main})" | xargs -n 1 git branch -d
