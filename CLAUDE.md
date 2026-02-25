@@ -22,7 +22,7 @@ source ~/.bashrc        # Reload shell to activate
 
 ## Before pushing to GitHub
 
-Run `run-full-build` from the repo root. If it fails because there are no defined tests, re-run with `--skip-build`.
+Use `pushcode` instead of `git push`. It pulls latest changes, runs the build, and then pushes. If the build fails because there are no defined tests, re-run with `pushcode --skip-build`.
 
 ## Script conventions
 
