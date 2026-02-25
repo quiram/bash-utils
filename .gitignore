@@ -3,3 +3,4 @@
 /java/import-all-certs
 /java/remove-all-certs
 .DS_Store
+.claude/
