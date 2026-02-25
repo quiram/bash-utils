@@ -20,7 +20,7 @@ elif [[ -f "build.gradle" ]]; then
     cmds=("./gradlew $* clean test")
 elif [[ -f "package.json" ]]; then
     type="node"
-    cmds=("nvm install" "npm install" "npm run build")
+    cmds=("nvm install" "npm install" "npm test" "npm run build")
 else
     fail "Could not determine the type of build to run, are you in the right folder?"
 fi
